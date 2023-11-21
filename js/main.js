@@ -1,10 +1,21 @@
 (() => {
 
   //variables
-
+  let spinner = `<?xml version="1.0" encoding="utf-8"?>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(255, 255, 255); display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+  <circle cx="30" cy="50" fill="#e90c59" r="20">
+    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
+  </circle>
+  <circle cx="70" cy="50" fill="#46dff0" r="20">
+    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="0s"></animate>
+  </circle>
+  <circle cx="30" cy="50" fill="#e90c59" r="20">
+    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
+    <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" dur="1s" repeatCount="indefinite"></animate>
+  </circle> </svg>`;
   const model = document.querySelector("#model");
-  const infoCon = document.querySelector("#info-con");
   const hotspots = document.querySelectorAll(".Hotspot");
+  const infoCon = document.querySelector("#info-con");
 
   const materialTemplate = document.querySelector("#material-template");
   const materialList = document.querySelector("#material-list");
@@ -38,28 +49,28 @@
     //This information needs to be removed then pulled with an AJAX Call using the Fetch API
     //this is the api url https://swiftpixel.com/earbud/api/materials"
 
-  // const materialListData = [
-  //   {
-  //     heading: "Precision-Crafted Polymers",
-  //     description: "Our earbuds are meticulously molded from high-quality plastics, ensuring a blend of elegance, comfort, and resilience that's second to none."
-  //   },
-  //   {
-  //     heading: "Luxurious Silicone Harmony",
-  //     description: "Our uniquely engineered ear tips are cocooned in plush silicone, delivering an opulent embrace for your ears, ensuring an unrivaled fit and exquisite audio experience."
-  //   },
-  //   {
-  //     heading: "Rubberized Cables",
-  //     description: "Experience the unparalleled freedom of movement with our flexible rubber cables that promise durability without compromise."
-  //   },
-  //   {
-  //     heading: "Enhanced Comfort Sensors",
-  //     description: "A touch of magic in the form of built-in microphones and sensors empowers your earbuds to obey your every command, making your audio journey seamless and enchanting."
-  //   },
-  //   {
-  //     heading: "Artistic Mesh Guard",
-  //     description: "Shielded by artful mesh screens, our speakers remain untarnished, keeping your listening experience pristine."
-  //   }
-  // ];
+   //const materialListData = [
+     //{
+      // heading: "Precision-Crafted Polymers",
+      // description: "Our earbuds are meticulously molded from high-quality plastics, ensuring a blend of elegance, comfort, and resilience that's second to none."
+    //},
+    //{
+      // heading: "Luxurious Silicone Harmony",
+      //description: "Our uniquely engineered ear tips are cocooned in plush silicone, delivering an opulent embrace for your ears, ensuring an unrivaled fit and exquisite audio experience."
+     //},
+     //{
+      // heading: "Rubberized Cables",
+      // description: "Experience the unparalleled freedom of movement with our flexible rubber cables that promise durability without compromise."
+     //},
+     //{
+       //heading: "Enhanced Comfort Sensors",
+       //description: "A touch of magic in the form of built-in microphones and sensors empowers your earbuds to obey your every command, making your audio journey seamless and enchanting."
+     //},
+     //{
+       //heading: "Artistic Mesh Guard",
+       //description: "Shielded by artful mesh screens, our speakers remain untarnished, keeping your listening experience pristine."
+     //}
+   //];
 
   //functions
   function modelLoaded() {
@@ -73,7 +84,6 @@
     //make AJAX call here
 
     function getData() {
-      // infoCon.innerHTML = spinner;
       fetch("https://swiftpixel.com/earbud/api/infoboxes")
       // repsonse is packages so we have to unppack 
       //takes stringified JSON and converst back to a JS object
@@ -111,56 +121,31 @@
       // repsonse is packages so we have to unppack 
        //takes stringified JSON and converst back to a JS object
        .then(response => response.json()) //unpack the API response (tunr it back to a plain JS object)
-       .then(data => {
-         console.log(data);
-         //process data and write to the down
-  
-         let ul = document.createElement("ul");
-         ul.id = "material-list";
-        
-         data.results.forEach(result => {
-         
-          var li = document.createElement("li");
-  
-          var h2 = document.createElement("h3");
-          h2.textContent = result.heading;
-  
-          var p = document.createElement("p");
-           p.textContent = result.description;
-
-           li.appendChild(h3);
-           li.appendChild(p);
-           ul.appendChild(li);
-       });
-  
-        // Get the container element and clear its content
-        peopleCon.innerHTML = "";
-        peopleCon.appendChild(ul);   
-  
-       })
-       .catch(error => console.error(error)); //catch and report any errors
-     }
-  
-     getData();
-  
-  
-     materialListData.forEach(material => {
-       // Clone the template content
-       const clone = materialTemplate.content.cloneNode(true);
-       //const clone = document.importNode(materialTemplate.content, true);
-
-       // Populate the cloned template with data
-       const materialHeading = clone.querySelector(".material-heading");
-       materialHeading.textContent = material.heading;
-
-       const materialDescription = clone.querySelector(".material-description");
-       materialDescription.textContent = material.description;
-
-       // Append the populated template to the list
-       materialList.appendChild(clone);
-     });
-
-   }
+        .then(info => {
+          console.log(info);
+          //process data and write to the down
+          
+          info.forEach(material => {
+            // Clone the template content
+            const clone = materialTemplate.content.cloneNode(true);
+            //const clone = document.importNode(materialTemplate.content, true);
+     
+            // Populate the cloned template with data
+            const materialHeading = clone.querySelector(".material-heading");
+            materialHeading.textContent = material.heading;
+     
+            const materialDescription = clone.querySelector(".material-description");
+            materialDescription.textContent = material.description;
+     
+            // Append the populated template to the list
+            materialList.appendChild(clone);
+          });
+       
+          
+        })}
+      
+    getData();
+    }
    loadMaterialInfo()
 
   function showInfo() {
