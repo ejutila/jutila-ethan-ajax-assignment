@@ -1,9 +1,21 @@
 (() => {
 
   //variables
-
+  let spinner = `<?xml version="1.0" encoding="utf-8"?>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(255, 255, 255); display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+  <circle cx="30" cy="50" fill="#e90c59" r="20">
+    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
+  </circle>
+  <circle cx="70" cy="50" fill="#46dff0" r="20">
+    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="0s"></animate>
+  </circle>
+  <circle cx="30" cy="50" fill="#e90c59" r="20">
+    <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
+    <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" dur="1s" repeatCount="indefinite"></animate>
+  </circle> </svg>`;
   const model = document.querySelector("#model");
   const hotspots = document.querySelectorAll(".Hotspot");
+  const infoCon = document.querySelector("#info-con");
 
   const materialTemplate = document.querySelector("#material-template");
   const materialList = document.querySelector("#material-list");
@@ -72,7 +84,6 @@
     //make AJAX call here
 
     function getData() {
-      // infoCon.innerHTML = spinner;
       fetch("https://swiftpixel.com/earbud/api/infoboxes")
       // repsonse is packages so we have to unppack 
       //takes stringified JSON and converst back to a JS object
@@ -110,11 +121,11 @@
       // repsonse is packages so we have to unppack 
        //takes stringified JSON and converst back to a JS object
        .then(response => response.json()) //unpack the API response (tunr it back to a plain JS object)
-        .then(data => {
-          console.log(data);
+        .then(info => {
+          console.log(info);
           //process data and write to the down
           
-          materialList.forEach(material => {
+          info.forEach(material => {
             // Clone the template content
             const clone = materialTemplate.content.cloneNode(true);
             //const clone = document.importNode(materialTemplate.content, true);
@@ -130,8 +141,9 @@
             materialList.appendChild(clone);
           });
        
+          
         })}
-  
+      
     getData();
     }
    loadMaterialInfo()
