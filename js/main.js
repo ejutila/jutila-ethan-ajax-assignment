@@ -1,6 +1,13 @@
 (() => {
 
   //variables
+  const model = document.querySelector("#model");
+  const hotspots = document.querySelectorAll(".Hotspot");
+
+  const infoCon = document.querySelector("#info-con");
+  const materialTemplate = document.querySelector("#material-template");
+  const materialList = document.querySelector("#material-list");
+
   let spinner = `<?xml version="1.0" encoding="utf-8"?>
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(255, 255, 255); display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
   <circle cx="30" cy="50" fill="#e90c59" r="20">
@@ -13,12 +20,6 @@
     <animate attributeName="cx" repeatCount="indefinite" dur="1s" keyTimes="0;0.5;1" values="30;70;30" begin="-0.5s"></animate>
     <animate attributeName="fill-opacity" values="0;0;1;1" calcMode="discrete" keyTimes="0;0.499;0.5;1" dur="1s" repeatCount="indefinite"></animate>
   </circle> </svg>`;
-  const model = document.querySelector("#model");
-  const hotspots = document.querySelectorAll(".Hotspot");
-  const infoCon = document.querySelector("#info-con");
-
-  const materialTemplate = document.querySelector("#material-template");
-  const materialList = document.querySelector("#material-list");
 
   //This information needs to be removed then pulled with an AJAX Call using the Fetch API
   //this is the api url https://swiftpixel.com/earbud/api/infoboxes"
@@ -113,10 +114,9 @@
 
 
    function loadMaterialInfo() {
-
+    infoCon.innerHTML = spinner;
      //make AJAX Call here
      function getData() {
-      //infoCon.innerHTML = spinner;
        fetch("https://swiftpixel.com/earbud/api/materials")
       // repsonse is packages so we have to unppack 
        //takes stringified JSON and converst back to a JS object
@@ -140,7 +140,8 @@
             // Append the populated template to the list
             materialList.appendChild(clone);
           });
-       
+          infoCon.innerHTML = ""
+          infoCon.appendChild(materialList)
           
         })}
       

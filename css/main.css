@@ -61,6 +61,7 @@ model-viewer {
   padding: 0.5em 1em;
   position: absolute;
   top: 50%;
+  width: -moz-max-content;
   width: max-content;
   text-align: left;
 }
@@ -149,4 +150,35 @@ model-viewer[ar-status=session-started] > #ar-prompt {
 
 model-viewer > #ar-prompt > img {
   animation: circle 4s linear infinite;
+}
+
+#info-con h2 {
+  margin-bottom: 50px;
+}
+
+#info-con ul {
+  padding: 0;
+  margin: 0;
+}
+
+#info-con ul li {
+  padding: 20px;
+  list-style-type: none;
+}
+
+#info-con ul li:nth-child(odd) {
+  background-color: #efefef;
+}
+
+#info-con ul li h2 {
+  margin: 0;
+}
+
+#info-con ul li img {
+  float: left;
+  margin-right: 20px;
+}
+
+#info-con svg {
+  max-width: 100px;
 }/*# sourceMappingURL=main.css.map */
