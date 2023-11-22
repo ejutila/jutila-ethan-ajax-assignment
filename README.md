@@ -1,4 +1,4 @@
-# Ajax Assignment Earbuds
+# AJAX Assignment Earbuds
 
 This is the Ajax assignment created with the provided earbuds code. 
 This new github code pulls the information from the Fetch API to display both the 
@@ -17,7 +17,7 @@ Webpage - Access this page using the internet
 
 ## History
 
-est. Sept. 2023
+est. Nov. 2023
 
 ## Credits
 
